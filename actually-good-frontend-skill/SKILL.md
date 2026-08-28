@@ -36,7 +36,20 @@ vary them deliberately per project, matched to the brand:
 - **Radius**: sharp (`--radius: 0`) / subtle (0.375rem) / soft (0.75rem) /
   pill — a sharp-cornered page and a soft one feel like different products
 - **Typography**: font pairing and weight attitude (grotesk/techy, serif
-  editorial headings, mono accents, tight vs airy tracking)
+  editorial headings, mono accents, tight vs airy tracking). ALWAYS pick
+  from this approved list — proven fonts only, never obscure or default
+  system fonts:
+  - Neutral sans (body/UI): **Inter, Geist, Noto Sans, DM Sans, Figtree,
+    Manrope, Plus Jakarta Sans**
+  - Character sans (techy/display headings): **Space Grotesk, Sora, Outfit,
+    Bricolage Grotesque**
+  - Editorial serif (premium headings): **Lora, Instrument Serif, Fraunces,
+    Source Serif 4**
+  - Mono (code accents, stat numbers): **Geist Mono, JetBrains Mono, IBM
+    Plex Mono**
+  Pair one body sans + optionally one heading font + optionally one mono
+  accent. All are on Google Fonts / `next/font` — load properly (e.g.
+  `next/font/google`), no CDN `<link>` hacks.
 - **Depth**: flat borders-only vs layered shadows vs gradient-tinted surfaces
 - **Density**: compact and information-dense vs spacious marketing-airy
 - **Mode**: dark-first, light-first, or both
