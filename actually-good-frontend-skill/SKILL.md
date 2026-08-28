@@ -34,9 +34,9 @@ concrete theme across all the axes below, and lead with it. Ask with
 AskUserQuestion, roughly:
 
 - **[Your recommendation] (Recommended)** — first option, stated concretely,
-  e.g. "Dark-first, electric violet primary, soft radius, Space Grotesk
-  headings + Inter body — fits a consumer AI product". Derived from their
-  startup, not generic.
+  e.g. "Dark-first, deep emerald accent on near-black, subtle radius, Space
+  Grotesk headings + Inter body — fits a consumer AI product". Derived from
+  their startup, not generic.
 - **Keep existing theme** — if the project already has a customized shadcn
   `globals.css`, that's fine; use it as-is (skip recommending only when the
   user has clearly already invested in a theme)
@@ -50,7 +50,12 @@ A theme is NOT just colors. To keep every project from converging on the
 same-looking page, a theme is a full design personality across these axes —
 vary them deliberately per project, matched to the brand:
 
-- **Color**: palette + which role is loud (vivid primary vs near-monochrome)
+- **Color**: palette + which role is loud (vivid primary vs near-monochrome).
+  **NEVER default to violet/purple/pink** — the purple-gradient theme is the
+  signature of sloppy AI-generated websites and is banned unless the user's
+  brand explicitly uses it. Reach instead for palettes with a point of view:
+  monochrome + one sharp accent, deep blue, emerald, amber/warm neutral,
+  slate + orange, etc.
 - **Radius**: sharp (`--radius: 0`) / subtle (0.375rem) / soft (0.75rem) /
   pill — a sharp-cornered page and a soft one feel like different products
 - **Typography**: font pairing and weight attitude (grotesk/techy, serif
@@ -74,8 +79,9 @@ vary them deliberately per project, matched to the brand:
 
 Two products can even share blocks yet look unrelated if these axes differ.
 So: a fintech might get sharp corners + serif headings + flat borders; a
-consumer AI app soft radius + grotesk + layered glows. Pick a combination
-that fits the startup, don't default to "zinc, 0.5rem, Inter" every time.
+consumer AI app soft radius + grotesk + layered depth. Pick a combination
+that fits the startup — don't default to "zinc, 0.5rem, Inter" every time,
+and never to the purple-pink AI-slop look.
 
 Then apply it by editing the shadcn CSS variables in `globals.css`
 (`app/globals.css` or `src/index.css` etc.) — both `:root` and `.dark`:
@@ -243,20 +249,35 @@ or dropping sections, not by describing every section from zero.
    `globals.css` tokens (`bg-primary`, `text-muted-foreground`, `rounded-lg`
    via `--radius`, `border-border`, …) so Step 1's theme actually governs
    everything.
-5. **Harmonization pass** — mixed blocks must look like one source. When a
-   page combines Watermelon and Tailark blocks, go through them side by side
-   and normalize anything that betrays different origins:
-   - **Radius**: one consistent rounding scale driven by `--radius`. If one
-     block is pill-rounded and its neighbor is square, align both to the
-     theme's radius.
-   - **Font**: all blocks inherit the project's font stack — no block brings
-     its own font-family.
-   - **Borders & shadows**: same border color (`border-border`), width, and
-     shadow depth treatment across sections.
-   - **Color usage**: same token roles for the same jobs (primary for CTAs,
-     muted-foreground for secondary text) in every block.
-   - **Rhythm**: consistent max-width container and vertical section padding
-     so sections stack like one designed page, not stitched screenshots.
+5. **Normalization sweep** — MANDATORY, per block, mechanical, not
+   aspirational. Blocks arrive with their own art direction; strip it down
+   to the theme. For EVERY installed block:
+   - **Radius**: grep the block for every `rounded-*` utility and force it
+     onto the theme scale (`rounded-lg`/`rounded-xl` via `--radius`). A page
+     where one card is square and its neighbor is pill-shaped is a failed
+     sweep — shadcn Card and block-internal cards must round identically.
+   - **Strip eyebrow pills/badges**: the little pill above a section heading
+     ("FAQ", "GET STARTED", dot-badges) is a custom flourish, NOT part of
+     the design system. Remove them from every block unless the user's
+     reference design uses them.
+   - **Strip one-off background textures**: dotted grids, noise, pattern
+     overlays, decorative gradient blobs that exist in only one block don't
+     belong. A texture is either a theme-wide decision applied everywhere
+     or removed.
+   - **Font**: all blocks inherit the project font stack — no block brings
+     its own font-family or `font-serif` surprises.
+   - **Borders & shadows**: one border color (`border-border`), one shadow
+     depth treatment, page-wide.
+   - **Color roles**: primary for CTAs, muted-foreground for secondary text,
+     in every block.
+   - **Layout rhythm**: one shared max-width container, grids centered
+     (pricing cards etc. must be centered in their container), and ONE
+     vertical padding scale for all sections — adjacent sections must not
+     double up their paddings into a huge seam (e.g. FAQ and CTA drifting
+     apart). Set consistent `py-*` on sections and check the seams.
+   - **Broken block = swap, not ship**: if a block still renders wrong or
+     messy after adaptation (layout falls apart, interaction glitches),
+     swap in a sibling variant instead of shipping or hand-repairing it.
 6. Render and verify: responsive at narrow widths, dark mode if the theme has
    one, no console errors.
 
@@ -289,3 +310,8 @@ fits.
   its colors.
 - Keep semantic HTML and keyboard accessibility intact when adapting blocks;
   registry code is a starting point, not an excuse.
+- **No purple/violet-pink theme unless explicitly requested.** It reads as
+  AI-generated slop.
+- **No eyebrow pills, decorative badges, or one-off background textures**
+  carried over from blocks — these count as unrequested custom elements.
+  Strip them during the normalization sweep.
