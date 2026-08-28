@@ -90,7 +90,8 @@ If the project has no shadcn setup (`components.json` missing), run
 
 ## Step 2 — Find blocks in the registries
 
-Two sources, both free, no auth:
+Two sources (Watermelon fully free; Tailark's index is free but its block
+items are PAYWALLED — see field notes below):
 
 | Source | Index | Item install |
 |---|---|---|
@@ -202,6 +203,30 @@ variants whose structure fits the product's story:
 
 Propose the lineup, then build it from blocks. The user steers by swapping
 or dropping sections, not by describing every section from zero.
+
+### Field notes (verified 2026-08, save yourself the debugging)
+
+- **Tailark items return 402-style errors** ("Sign in with a plan that
+  includes blocks") for individual `/r/<name>.json` blocks; only the index
+  and `core-*` utilities are free. If a Tailark fetch fails, pivot to the
+  Watermelon equivalent — Watermelon serves every item free.
+- **Watermelon's `registryDependencies` metadata is broken**: blocks declare
+  bare deps like `"stats"`/`"pricing"` that don't exist anywhere, so
+  `npx shadcn add <url>` fails resolving them against ui.shadcn.com. Use the
+  manual fallback: curl the item JSON (send a browser User-Agent — default
+  curl/python UAs get 403), write `files[].content` to the declared paths,
+  then derive REAL deps from the code's imports (`@/components/ui/*` →
+  install via shadcn CLI; npm packages → npm install).
+- **Init shadcn with the classic Radix style**: the latest CLI defaults to
+  `base-nova` (Base UI), whose components lack `asChild` and Radix props
+  like `type="single" collapsible` that Watermelon blocks use. Set
+  `"style": "new-york"` in components.json and (re)add primitives.
+- **lucide-react removed brand icons** (Github, Figma, Slack, …). Blocks
+  importing them fail to build — swap to `react-icons` (`fa6`/`si`).
+- Blocks ship with demo copy EVERYWHERE, including deep inside "props-driven"
+  blocks (hardcoded section headings, CTA prefixes, social-proof labels,
+  double `/` around price units). After composing, render and READ the
+  actual page text end-to-end; grep is not enough.
 
 ## Step 3 — Install, compose, adapt
 
