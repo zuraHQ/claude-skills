@@ -132,6 +132,26 @@ component fancier than stock.) The registries' `registryDependencies`
 resolve to official shadcn components anyway, so all three tiers share the
 same primitives and theme tokens.
 
+### Dashboards: borrow the shell, strip the fake data
+
+Rule for every dashboard request — never hand-build the chassis, and never
+ship someone else's demo content:
+
+1. **Pull the dashboard design** from either the official shadcn registry
+   (`npx shadcn@latest add dashboard-01`, sidebar blocks `sidebar-01..16`)
+   or a Watermelon full dashboard (`e-commerce-dashboard`,
+   `mail-dashboard`, …) — whichever layout best fits the user's product.
+2. **Keep the shell**: sidebar, top bar, layout grid, navigation chrome.
+   Adapt the sidebar's nav items to the user's actual app sections.
+3. **Strip the body**: remove the block's pre-filled fake data — demo
+   charts, fake revenue stats, placeholder tables and users. Deliver the
+   dashboard as a clean shell with the sidebar in place and an empty content
+   canvas, so the user is never confused by predefined fake data that looks
+   like real functionality.
+4. Fill the body only with what the user's request actually calls for, using
+   stock shadcn components (tables, cards, charts) wired to their real data
+   or clearly-empty states.
+
 ### Compose proactively, fitted to the user's startup
 
 Whenever there's a chance to use a registry item — faq, hero, pricing,
