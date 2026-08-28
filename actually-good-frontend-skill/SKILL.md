@@ -27,13 +27,24 @@ pricing + Watermelon footer).
 
 ## Step 1 — Always ask for the theme first
 
-When this skill activates, before touching any code, ask the user for the
-theme with AskUserQuestion. Offer roughly:
+When this skill activates, before touching any code, settle the theme —
+but don't dump the decision on the user. First DESIGN a recommendation:
+from what you know of their startup/product (domain, audience, tone), pick a
+concrete theme across all the axes below, and lead with it. Ask with
+AskUserQuestion, roughly:
 
-- **Keep existing theme** — project's current shadcn `globals.css` as-is
+- **[Your recommendation] (Recommended)** — first option, stated concretely,
+  e.g. "Dark-first, electric violet primary, soft radius, Space Grotesk
+  headings + Inter body — fits a consumer AI product". Derived from their
+  startup, not generic.
+- **Keep existing theme** — if the project already has a customized shadcn
+  `globals.css`, that's fine; use it as-is (skip recommending only when the
+  user has clearly already invested in a theme)
 - **Describe it** — user gives brand color / vibe (e.g. "violet, dark,
   rounded, techy") and you translate it into shadcn variables
-- **Neutral default** — stock zinc/neutral shadcn theme
+
+If you don't yet know what the startup is, ask that in the same
+AskUserQuestion call — the recommendation needs it.
 
 A theme is NOT just colors. To keep every project from converging on the
 same-looking page, a theme is a full design personality across these axes —
