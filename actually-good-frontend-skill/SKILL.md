@@ -12,6 +12,13 @@ and hand-written UI is the last resort, used only for glue and for what no
 block covers. The blocks are legos: fetch them, snap them together, customize
 content and theme — that IS the workflow.
 
+When the last resort IS needed — the user requests UI no registry covers —
+hand-written still means built inside the same system: compose it from stock
+shadcn primitives (Card, Button, Table, Dialog, …), style it exclusively with
+the `globals.css` theme tokens, and use the approved fonts. Custom UI must be
+indistinguishable in look and feel from the registry blocks around it — never
+bespoke divs with their own one-off styling.
+
 This works because both source libraries are shadcn registries: every block
 renders off the shadcn CSS variables, so one customized `globals.css` themes
 all of them consistently — and blocks from the two libraries can be freely
